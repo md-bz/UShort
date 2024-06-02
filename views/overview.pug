@@ -1,0 +1,14 @@
+extends base
+
+block content 
+    main.main
+        h1 Shorten your URL in seconds
+        
+        form#shorten(action="") 
+            input#url(type="text",placeholder="https//very-long-url.with/lots-of-parameters-that-takes-a-lot-of-characters-to-display" )
+            //- button.shorten#shorten Shorten
+            button.shorten(type="submit") Shorten  
+
+        .short-url#short-url
+            p Your short url:
+            a#short-url-link url

@@ -1,0 +1,78 @@
+:root {
+    --primary-color: #3d0c6e;
+    --secondary-color: #e44e4e;
+
+    --br-size: 0.3em;
+}
+
+body {
+    background-color: var(--primary-color);
+}
+
+h1,
+h2,
+p {
+    color: var(--secondary-color);
+}
+
+.url input {
+    background-color: #e2e2e2;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 3em 2em;
+}
+
+nav a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin: 0 1.5em 0 0;
+}
+
+.login {
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 0.5em;
+    color: var(--primary-color);
+}
+
+.main {
+    width: 50vw;
+    margin: 12em auto;
+    text-align: center;
+    /* position: relative; */
+}
+.main h1 {
+    font-size: 3em;
+}
+.main form {
+    /* border-radius: 3em; */
+    margin: 2.5em 0;
+}
+
+.main input {
+    width: 45%;
+    padding: 0.4em;
+    border: none;
+    border-radius: var(--br-size) 0 0 var(--br-size);
+}
+
+.main button {
+    /* position: absolute; */
+    background-color: var(--secondary-color);
+    color: #e2e2e2;
+    font-weight: bold;
+
+    padding: 0.4em;
+    border: none;
+    border-radius: 0 var(--br-size) var(--br-size) 0;
+}
+.short-url {
+    display: none;
+}
+
+.short-url a {
+    color: var(--secondary-color);
+}
