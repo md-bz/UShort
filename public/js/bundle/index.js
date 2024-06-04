@@ -593,7 +593,7 @@ var _shorten = require("./shorten");
 const loginForm = document.getElementById("login");
 const signupForm = document.getElementById("signup");
 const logoutBtn = document.getElementById("logout");
-const shortenForm = document.getElementById("shorten");
+const shortenForm = document.getElementById("shorten-form");
 // const dataUpdateForm = document.getElementById("data-update");
 const passwordUpdateForm = document.getElementById("password-update");
 const createFunc = (fields, callback, callbackOptions = {})=>{
@@ -5505,14 +5505,17 @@ const shorten = async ({ url })=>{
         });
         if (res.data.status === "success") {
             (0, _alerts.showAlert)("success", "shortened successfully");
-            // location.assign("/");
             console.log(res.data);
-            const shortUrl = document.getElementById("short-url");
-            shortUrl.style.display = "inline";
-            document.getElementById("short-url-link").href = res.data.data.url.shortUrl;
-            document.getElementById("short-url-link").innerText = res.data.data.url.shortUrl;
+            const shortUrl = res.data.data.url.shortUrl;
+            document.getElementById("shorten-header").innerText = "Here's Your short link";
+            document.getElementById("shorten-form").style.display = "none";
+            const shortLinkElement = document.getElementById("short-link");
+            shortLinkElement.style.display = "inline";
+            shortLinkElement.href = shortUrl;
+            shortLinkElement.innerText = shortUrl;
         }
     } catch (error) {
+        console.log(error);
         (0, _alerts.showAlert)("error", error.response.data.message);
     }
 };

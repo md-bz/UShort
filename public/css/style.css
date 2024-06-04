@@ -1,6 +1,9 @@
 :root {
-    --primary-color: #3d0c6e;
-    --secondary-color: #e44e4e;
+    --primary-color: #0c062e;
+    /* --primary-color: #3d0c6e; */
+    /* --secondary-color: #e77171; */
+    --secondary-color: #bd3e3e;
+    /* --secondary-color: #e44e4e; */
 
     --br-size: 0.3em;
 }
@@ -39,7 +42,7 @@ nav a {
 }
 
 .main {
-    width: 50vw;
+    width: min(90vw, 960px);
     margin: 12em auto;
     text-align: center;
     /* position: relative; */
@@ -47,7 +50,7 @@ nav a {
 .main h1 {
     font-size: 3em;
 }
-.main form {
+form {
     /* border-radius: 3em; */
     margin: 2.5em 0;
 }
@@ -56,6 +59,10 @@ nav a {
     width: 45%;
     padding: 0.4em;
     border: none;
+    border-radius: var(--br-size);
+}
+
+input#url {
     border-radius: var(--br-size) 0 0 var(--br-size);
 }
 
@@ -67,12 +74,47 @@ nav a {
 
     padding: 0.4em;
     border: none;
-    border-radius: 0 var(--br-size) var(--br-size) 0;
-}
-.short-url {
-    display: none;
+    border-radius: var(--br-size);
 }
 
-.short-url a {
+button.shorten {
+    border-radius: 0 var(--br-size) var(--br-size) 0;
+}
+#short-link {
+    display: none;
     color: var(--secondary-color);
+    font-size: 1.5em;
+}
+
+.login-form,
+.signup-form {
+    background-color: rgba(18, 13, 51, 0.7);
+    width: min(60%, 100vw);
+    margin: 0 auto;
+    display: flex; /* Use flexbox */
+
+    justify-content: center; /* Horizontal centering */
+
+    flex-direction: column;
+    align-items: center; /* Vertical centering */
+}
+
+.form {
+    display: flex;
+    width: min(500px, 100vw);
+    align-items: center;
+    flex-direction: column;
+}
+
+.form label {
+    /* color: var(--secondary-color); */
+    margin-bottom: 0.3em;
+
+    /* display: block; */
+    color: white;
+}
+.form input {
+    background-color: rgba(255, 255, 255, 0.9);
+
+    margin-bottom: 0.8em;
 }

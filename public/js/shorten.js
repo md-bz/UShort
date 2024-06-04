@@ -10,19 +10,25 @@ export const shorten = async ({ url }) => {
                 url,
             },
         });
+
         if (res.data.status === "success") {
             showAlert("success", "shortened successfully");
-            // location.assign("/");
             console.log(res.data);
-            const shortUrl = document.getElementById("short-url");
+            const shortUrl = res.data.data.url.shortUrl;
 
-            shortUrl.style.display = "inline";
-            document.getElementById("short-url-link").href =
-                res.data.data.url.shortUrl;
-            document.getElementById("short-url-link").innerText =
-                res.data.data.url.shortUrl;
+            document.getElementById("shorten-header").innerText =
+                "Here's Your short link";
+
+            document.getElementById("shorten-form").style.display = "none";
+
+            const shortLinkElement = document.getElementById("short-link");
+            shortLinkElement.style.display = "inline";
+            shortLinkElement.href = shortUrl;
+            shortLinkElement.innerText = shortUrl;
         }
     } catch (error) {
+        console.log(error);
+
         showAlert("error", error.response.data.message);
     }
 };

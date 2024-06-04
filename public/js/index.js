@@ -8,7 +8,7 @@ import { shorten } from "./shorten";
 const loginForm = document.getElementById("login");
 const signupForm = document.getElementById("signup");
 const logoutBtn = document.getElementById("logout");
-const shortenForm = document.getElementById("shorten");
+const shortenForm = document.getElementById("shorten-form");
 // const dataUpdateForm = document.getElementById("data-update");
 const passwordUpdateForm = document.getElementById("password-update");
 const createFunc = (fields, callback, callbackOptions = {}) => {
