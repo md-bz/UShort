@@ -16,6 +16,7 @@ function convertShortUrl(req, shortUrl) {
 }
 
 exports.createUrl = catchAsync(async (req, res, next) => {
+    const user = req.user;
     let url = req.body.url;
     if (!url) return next(new AppError("Provide a url."));
     url = getFullUrl(url);
