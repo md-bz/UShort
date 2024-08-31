@@ -1,3 +1,3 @@
 # UShort application
 
-Made with: Node.js,express,mongoDB,mongoose
+Made with: Node.js, Yarn,express,mongoDB,mongoose,templated with pug with pure css html and js
