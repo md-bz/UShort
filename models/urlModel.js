@@ -19,6 +19,10 @@ const urlSchema = new mongoose.Schema({
         type: Date,
         default: () => Date.now() + 6 * 30 * 24 * 60 * 60 * 1000,
     },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+    },
 });
 
 urlSchema.pre(/^find/, async function (next) {

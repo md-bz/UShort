@@ -2,7 +2,9 @@ const multer = require("multer");
 const User = require("../models/userModel");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
-const { deleteOne, updateOne, getOne, getAll } = require("./factoryController");
+const factoryController = require("./factoryController");
+const sharp = require("sharp");
+const Url = require("../models/urlModel");
 
 const multerStorage = multer.memoryStorage();
 
@@ -20,7 +22,7 @@ const upload = multer({
 exports.resizePhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-    await req.file.buffer
+    await sharp(req.file.buffer)
         .resize(500, 500)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
@@ -38,23 +40,16 @@ exports.deleteAllUsers = catchAsync(async (req, res) => {
     });
 });
 
-exports.createUser = catchAsync(async (req, res) => {
-    const user = await User.create(req.body);
-    res.status(201).json({
-        status: "success",
-        data: { user },
-    });
-});
-
 exports.getMe = (req, res, next) => {
     req.params.id = req.user._id;
     next();
 };
 
-exports.getAllUsers = getAll(User);
-exports.getUser = getOne(User);
-exports.updateUser = updateOne(User);
-exports.deleteUser = deleteOne(User);
+exports.createUser = factoryController.createOne(User);
+exports.getAllUsers = factoryController.getAll(User);
+exports.getUser = factoryController.getOne(User);
+exports.updateUser = factoryController.updateOne(User);
+exports.deleteUser = factoryController.deleteOne(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
     const { name, password, passwordConfirm, email } = req.body;
@@ -93,5 +88,12 @@ exports.deleteTestUsers = catchAsync(async (req, res, next) => {
     res.status(204).json({
         status: "success",
         data: null,
+    });
+});
+exports.getMyUrls = catchAsync(async (req, res, next) => {
+    const urls = await Url.find({ user: req.user_id }, "-_id -__v");
+    res.status(200).json({
+        status: "success",
+        data: urls,
     });
 });

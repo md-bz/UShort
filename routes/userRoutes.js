@@ -12,12 +12,16 @@ router.route("/reset-password/:token").patch(authController.resetPassword);
 
 router.use(authController.protect);
 
+router.route("/my-urls").get(userController.getMyUrls);
+
 router.route("/change-password").patch(authController.changePassword);
-router.route("/update-me").patch(
-    // userController.uploadUserPhoto,
-    // userController.resizePhoto,
-    userController.updateMe
-);
+router
+    .route("/update-me")
+    .patch(
+        userController.uploadUserPhoto,
+        userController.resizePhoto,
+        userController.updateMe
+    );
 
 router.route("/delete-me").delete(userController.deleteMe);
 router.route("/me").get(userController.getMe, userController.getUser);
