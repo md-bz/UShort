@@ -91,7 +91,7 @@ exports.deleteTestUsers = catchAsync(async (req, res, next) => {
     });
 });
 exports.getMyUrls = catchAsync(async (req, res, next) => {
-    const urls = await Url.find({ user: req.user_id }, "-_id -__v");
+    const urls = await Url.find({ user: req.user._id }, "-_id -__v");
     res.status(200).json({
         status: "success",
         data: urls,
