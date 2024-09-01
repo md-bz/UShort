@@ -41,7 +41,6 @@ exports.signup = catchAsync(async (req, res, next) => {
         passwordConfirm,
     });
     const url = `${req.protocol}://${req.get("host")}/me`;
-    await new Email(newUser, url).sendWelcome();
 
     sendTokenResponse(newUser, res, req, 201);
 });
@@ -121,7 +120,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     next();
 });
 
-exports.loggedInUser = async (req, res, next) => {
+exports.userIsLoggedIn = async (req, res, next) => {
     try {
         if (!req.cookies.jwt) return next();
 
