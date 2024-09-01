@@ -9,31 +9,26 @@ function getFullUrl(url) {
     return `${protocol}://${pureUrl}`;
 }
 
-function convertShortUrl(req, shortUrl) {
-    console.log(req.protocol + "://" + req.get("host") + "/" + shortUrl);
-
-    return req.protocol + "://" + req.get("host") + "/" + shortUrl;
-}
-
 exports.createUrl = catchAsync(async (req, res, next) => {
     const user = req.user;
     let url = req.body.url;
+
     if (!url) return next(new AppError("Provide a url."));
     url = getFullUrl(url);
 
-    const oldUrl = await Url.findOne({ url });
+    if (!user) {
+        const oldUrl = await Url.findOne({ url });
 
-    if (oldUrl) {
-        oldUrl.shortUrl = convertShortUrl(req, oldUrl.shortUrl);
-
-        return res.status(200).json({
-            status: "success",
-            data: { url: oldUrl },
-        });
+        if (oldUrl) {
+            return res.status(200).json({
+                status: "success",
+                data: { url: oldUrl },
+            });
+        }
     }
+    let createQuery = user ? { url, user: user._id } : { url };
 
-    const newUrl = await Url.create({ url });
-    newUrl.shortUrl = convertShortUrl(req, newUrl.shortUrl);
+    const newUrl = await Url.create(createQuery);
 
     res.status(201).json({
         status: "success",
@@ -43,8 +38,49 @@ exports.createUrl = catchAsync(async (req, res, next) => {
 
 exports.getUrl = catchAsync(async (req, res, next) => {
     const shortUrl = req.url.slice(1);
-    console.log("wtf" + shortUrl);
     const url = await Url.findOne({ shortUrl });
     if (!url) return next(new AppError("Invalid or Expired link", 404));
     res.redirect(url.url);
+});
+
+exports.deleteUrl = catchAsync(async (req, res, next) => {
+    const { shortUrl } = req.params;
+
+    if (!shortUrl) return next(new AppError("Provide the short url."));
+
+    const result = await Url.findOneAndDelete({ shortUrl, user: req.user._id });
+
+    res.status(204).json({
+        status: "success",
+        data: {},
+    });
+});
+
+exports.updateUrl = catchAsync(async (req, res, next) => {
+    const { shortUrl } = req.params;
+
+    console.log({
+        shortUrl,
+        user: req.user._id,
+    });
+
+    const { url } = req.body;
+    if (!shortUrl || !url)
+        return next(
+            new AppError("Provide the short url and the new (long) url.")
+        );
+
+    const updateResult = await Url.findOneAndUpdate(
+        {
+            shortUrl,
+            user: req.user._id,
+        },
+        { url },
+        { new: true }
+    );
+
+    res.status(200).json({
+        status: "success",
+        data: updateResult,
+    });
 });
