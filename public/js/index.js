@@ -9,7 +9,7 @@ const loginForm = document.getElementById("login");
 const signupForm = document.getElementById("signup");
 const logoutBtn = document.getElementById("logout");
 const shortenForm = document.getElementById("shorten-form");
-// const dataUpdateForm = document.getElementById("data-update");
+const dataUpdateForm = document.getElementById("data-update");
 const passwordUpdateForm = document.getElementById("password-update");
 const createFunc = (fields, callback, callbackOptions = {}) => {
     return (event) => {
@@ -40,17 +40,17 @@ if (signupForm) {
         createFunc(["name", "email", "password", "passwordConfirm"], signup)
     );
 }
-// if (dataUpdateForm) {
-//     dataUpdateForm.addEventListener("submit", (event) => {
-//         event.preventDefault();
-//         const form = new FormData();
-//         form.append("name", document.getElementById("name").value);
-//         form.append("email", document.getElementById("email").value);
-//         form.append("photo", document.getElementById("photo").files[0]);
+if (dataUpdateForm) {
+    dataUpdateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const form = new FormData();
+        form.append("name", document.getElementById("name").value);
+        form.append("email", document.getElementById("email").value);
+        form.append("photo", document.getElementById("photo").files[0]);
 
-//         updateSettings(form, {});
-//     });
-// }
+        updateSettings(form, {});
+    });
+}
 if (passwordUpdateForm) {
     passwordUpdateForm.addEventListener("submit", async (event) => {
         event.preventDefault();

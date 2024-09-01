@@ -13,18 +13,22 @@ export const shorten = async ({ url }) => {
 
         if (res.data.status === "success") {
             showAlert("success", "shortened successfully");
-            console.log(res.data);
             const shortUrl = res.data.data.url.shortUrl;
 
             document.getElementById("shorten-header").innerText =
                 "Here's Your short link";
 
-            document.getElementById("shorten-form").style.display = "none";
+            // document.getElementById("shorten-form").style.display = "none";
 
-            const shortLinkElement = document.getElementById("short-link");
-            shortLinkElement.style.display = "inline";
-            shortLinkElement.href = shortUrl;
-            shortLinkElement.innerText = shortUrl;
+            // const shortLinkElement = document.getElementById("short-link");
+            const shortLinkLi = document.createElement("li");
+            shortLinkLi.style.display = "inline";
+            const shortLinkA = document.createElement("a");
+            shortLinkA.href = shortUrl;
+            shortLinkA.innerText = shortUrl;
+
+            shortLinkLi.appendChild(shortLinkA);
+            document.getElementById("links").appendChild(shortLinkLi);
         }
     } catch (error) {
         console.log(error);
@@ -32,3 +36,5 @@ export const shorten = async ({ url }) => {
         showAlert("error", error.response.data.message);
     }
 };
+
+export const getMyUrls = async({ url });

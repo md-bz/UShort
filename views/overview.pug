@@ -3,7 +3,9 @@ extends base
 block content 
     main.main
         h1#shorten-header Shorten your URL in seconds
-        a#short-link url
+        ul#links 
+
+        //- a#short-link url
         
         form#shorten-form(action="") 
             input#url(type="text",placeholder="https//very-long-url.with/lots-of-parameters-that-takes-a-lot-of-characters-to-display" )

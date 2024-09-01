@@ -2,10 +2,11 @@
     --primary-color: #0c062e;
     /* --primary-color: #3d0c6e; */
     /* --secondary-color: #e77171; */
-    --secondary-color: #bd3e3e;
-    /* --secondary-color: #e44e4e; */
+    /* --secondary-color: #bd3e3e; */
+    --secondary-color: #e44e4e;
 
     --br-size: 0.3em;
+    font-size: 1.2em;
 }
 
 body {
@@ -25,7 +26,7 @@ p {
 header {
     display: flex;
     justify-content: space-between;
-    margin: 3em 2em;
+    margin: 2em 11em;
 }
 
 nav a {
@@ -86,8 +87,7 @@ button.shorten {
     font-size: 1.5em;
 }
 
-.login-form,
-.signup-form {
+.form-container {
     background-color: rgba(18, 13, 51, 0.7);
     width: min(60%, 100vw);
     margin: 0 auto;
@@ -114,7 +114,19 @@ button.shorten {
     color: white;
 }
 .form input {
-    background-color: rgba(255, 255, 255, 0.9);
+    /* background-color: rgba(255, 255, 255, 0.9); */
 
     margin-bottom: 0.8em;
+}
+
+img {
+    width: 3em;
+    height: 3em;
+    border-radius: 3em;
+}
+
+.nav {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
 }

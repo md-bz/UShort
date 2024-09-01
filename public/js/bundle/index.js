@@ -594,7 +594,7 @@ const loginForm = document.getElementById("login");
 const signupForm = document.getElementById("signup");
 const logoutBtn = document.getElementById("logout");
 const shortenForm = document.getElementById("shorten-form");
-// const dataUpdateForm = document.getElementById("data-update");
+const dataUpdateForm = document.getElementById("data-update");
 const passwordUpdateForm = document.getElementById("password-update");
 const createFunc = (fields, callback, callbackOptions = {})=>{
     return (event)=>{
@@ -619,16 +619,14 @@ if (signupForm) signupForm.addEventListener("submit", createFunc([
     "password",
     "passwordConfirm"
 ], (0, _signup.signup)));
-// if (dataUpdateForm) {
-//     dataUpdateForm.addEventListener("submit", (event) => {
-//         event.preventDefault();
-//         const form = new FormData();
-//         form.append("name", document.getElementById("name").value);
-//         form.append("email", document.getElementById("email").value);
-//         form.append("photo", document.getElementById("photo").files[0]);
-//         updateSettings(form, {});
-//     });
-// }
+if (dataUpdateForm) dataUpdateForm.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    const form = new FormData();
+    form.append("name", document.getElementById("name").value);
+    form.append("email", document.getElementById("email").value);
+    form.append("photo", document.getElementById("photo").files[0]);
+    (0, _updateSettings.updateSettings)(form, {});
+});
 if (passwordUpdateForm) passwordUpdateForm.addEventListener("submit", async (event)=>{
     event.preventDefault();
     const data = {};
@@ -5482,6 +5480,7 @@ const updateSettings = async (data, { type = "data" })=>{
             data
         });
         if (res.data.status === "success") (0, _alerts.showAlert)("success", `${type.toUpperCase()} updated successfully`);
+        location.reload();
     } catch (error) {
         (0, _alerts.showAlert)("error", error);
     }
@@ -5491,34 +5490,41 @@ const updateSettings = async (data, { type = "data" })=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "shorten", ()=>shorten);
+parcelHelpers.export(exports, "getMyUrls", ()=>getMyUrls);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alerts = require("./alerts");
-const shorten = async ({ url })=>{
+const shorten = async ({ url: url1 })=>{
     try {
         const res = await (0, _axiosDefault.default)({
             method: "POST",
             url: "/api/v1/urls/",
             data: {
-                url
+                url: url1
             }
         });
         if (res.data.status === "success") {
             (0, _alerts.showAlert)("success", "shortened successfully");
-            console.log(res.data);
             const shortUrl = res.data.data.url.shortUrl;
             document.getElementById("shorten-header").innerText = "Here's Your short link";
-            document.getElementById("shorten-form").style.display = "none";
-            const shortLinkElement = document.getElementById("short-link");
-            shortLinkElement.style.display = "inline";
-            shortLinkElement.href = shortUrl;
-            shortLinkElement.innerText = shortUrl;
+            // document.getElementById("shorten-form").style.display = "none";
+            // const shortLinkElement = document.getElementById("short-link");
+            const shortLinkLi = document.createElement("li");
+            shortLinkLi.style.display = "inline";
+            const shortLinkA = document.createElement("a");
+            shortLinkA.href = shortUrl;
+            shortLinkA.innerText = shortUrl;
+            shortLinkLi.appendChild(shortLinkA);
+            document.getElementById("links").appendChild(shortLinkLi);
         }
     } catch (error) {
         console.log(error);
         (0, _alerts.showAlert)("error", error.response.data.message);
     }
 };
+const getMyUrls = async({
+    url
+});
 
 },{"axios":"6UM97","./alerts":"5AdJ8","@parcel/transformer-js/src/esmodule-helpers.js":"kcbDJ"}]},["ffVnn","bmgl6"], "bmgl6", "parcelRequire94c2")
 

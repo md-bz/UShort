@@ -2,7 +2,7 @@ extends base
 
 block content
   main.main
-    .signup-form
+    .form-container
       h2.heading-secondary.ma-bt-lg Make new account
       form#signup.form
         label.form__label(for='name') Full Name
@@ -13,4 +13,4 @@ block content
         input#password.form__input(type='password', placeholder='••••••••', required, minlength='10')
         label.form__label(for='passwordConfirm') Password Confirm
         input#passwordConfirm.form__input(type='password', placeholder='••••••••', required, minlength='10')
-        button.btn.btn--green sign u
+        button.btn.btn--green sign up
