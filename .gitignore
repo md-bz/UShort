@@ -1,0 +1,5 @@
+node_modules/
+.*
+!.gitignore
+public/img/users/*
+!public/img/users/default.jpg
