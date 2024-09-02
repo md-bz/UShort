@@ -36,11 +36,22 @@ exports.createUrl = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getUrl = catchAsync(async (req, res, next) => {
+exports.redirectUrl = catchAsync(async (req, res, next) => {
     const shortUrl = req.url.slice(1);
     const url = await Url.findOne({ shortUrl });
     if (!url) return next(new AppError("Invalid or Expired link", 404));
     res.redirect(url.url);
+});
+exports.getUrl = catchAsync(async (req, res, next) => {
+    const { shortUrl } = req.params;
+
+    const url = await Url.findOne({ shortUrl });
+    if (!url) return next(new AppError("Invalid or Expired link", 404));
+
+    res.status(200).json({
+        status: "success",
+        data: url,
+    });
 });
 
 exports.deleteUrl = catchAsync(async (req, res, next) => {

@@ -4,16 +4,12 @@ const { protect, tokenIsOptional } = require("../controllers/authController");
 
 const router = express.Router();
 
-router
-    .route("/")
-    .post(tokenIsOptional, protect, urlController.createUrl)
-    .get(urlController.getUrl);
-
-router.use(protect);
+router.route("/").post(tokenIsOptional, protect, urlController.createUrl);
 
 router
     .route("/:shortUrl")
-    .patch(urlController.updateUrl)
-    .delete(urlController.deleteUrl);
+    .get(urlController.getUrl)
+    .patch(protect, urlController.updateUrl)
+    .delete(protect, urlController.deleteUrl);
 
 module.exports = router;

@@ -14,7 +14,6 @@ const { errorHandler } = require("./controllers/errorController");
 const userRouter = require("./routes/userRoutes");
 const urlRouter = require("./routes/urlRoutes");
 const viewRouter = require("./routes/viewRotues");
-const shortUrlRouter = require("./routes/shortUrlRoutes");
 const { getUrl } = require("./controllers/urlController");
 
 const app = express();
@@ -79,7 +78,8 @@ app.use((req, res, next) => {
 // Routers
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/urls", urlRouter);
-app.use("/", viewRouter, getUrl);
+app.use("/", viewRouter);
+app.get(getUrl);
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));
